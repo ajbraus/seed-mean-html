@@ -5,7 +5,7 @@
 1. Node
 2. Angular
 3. Mongoose (MongoDB ODM)
-4. Jade (templating)
+4. HTML for templating
 
 ## Getting Started
 
