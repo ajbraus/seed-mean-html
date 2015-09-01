@@ -6,41 +6,8 @@
 
 angular.module('myApp.controllers', [])
   .controller('MainCtrl', ['$rootScope', '$scope', '$location', 'Auth', function ($rootScope, $scope, $location, Auth) {
-    // LOGOUT 
-    $scope.logout = function() {
-      localStorage.removeItem('jwtToken');
-      $location.path('/login')
-      $scope.isLoggedIn = false;
-    }
 
-    // CHECK IF LOGGED IN (IF JWT TOKEN PRESENT)
-    $scope.isLoggedIn = Auth.isLoggedIn();
-
-    // ON LOGIN UPDATE NAVBAR
-    $rootScope.$on('loggedIn', function () {
-      $scope.isLoggedIn = true
-    })
   }])
-
-  .controller('LoginCtrl', function ($rootScope, $scope, User, $location, Auth) {
-    $scope.user = {};
-    $scope.login = function() {
-      console.log($scope.user)
-      console.log('logging in')
-      User.login({}, $scope.user,
-        function (data) {
-          console.log(data.token)
-          localStorage.setItem("jwtToken", data.token);
-          $rootScope.$broadcast('loggedIn'); // TELL THE OTHER CONTROLLERS WE'RE LOGGED IN
-          $location.path('/');
-        },
-        function (data) {
-          var message = "Invalid Email or Password"
-          console.log(message)
-        }
-      );
-    };
-  })
 
   //POSTS
   .controller('TodosIndexCtrl', function ($scope, $location, Post, Auth) {
@@ -49,7 +16,6 @@ angular.module('myApp.controllers', [])
         $scope.todos = data
       },
       function(data) {
-        $location.path('/login');
       }
     );
 
