@@ -1,3 +1,12 @@
-add a single resource - todos
-clone and turn into just API for todos (with nested lists of todos)
-push to heroku
+DONE Add login form
+DONE submit email and password
+DONE get token back
+DONE save token to localStorage
+DONE Logout
+DONE console.log(req.user) in server
+DONE display if logged in (Auth.isLoggedIn() method)
+DONE send token with requests and responses (DONE in services)
+
+get login working
+create sign-up
+encrypt and verify password (in user.js)

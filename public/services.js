@@ -6,19 +6,53 @@
 
 angular.module('myApp.services', [])
   .factory('Post', function ($resource, HOST) {
-    return $resource(HOST + '/api/room/:room_name/posts/:id', {  room_name: '@room_name', id: '@id' })
+    return $resource(HOST + '/api/posts/:id', { id: '@id' })
   })
 
-  .factory('Socket', ['socketFactory', function (socketFactory) {
-    var socket = socketFactory();
-    // {
-        // ioSocket: io.connect('http://localhost:1337/')
-      // , prefix: ''
-    // }
-    socket.forward('broadcast.join_room')
-    socket.forward('broadcast.post');
-    socket.forward('broadcast.comment');
-    socket.forward('broadcast.vote_up');
-    socket.forward('broadcast.vote_down');
-    return socket
-  }]);
+  .factory('User', ['$resource', 'HOST', function ($resource, HOST) {
+    return $resource(HOST + '/api/users/:id', { id: '@id' }, {
+      update: { method: 'PUT' },
+      sign_up: { url: HOST + '/api/users', method: 'POST', isArray: false },
+      login: { url: HOST + '/api/users/login', method: 'POST', isArray: false },
+      logout: { url: HOST + '/api/users/logout', method: 'GET', isArray: false }
+    })
+  }])
+
+  .factory('Auth', [function() {
+    return {
+      isLoggedIn: function () {
+        return !!localStorage.getItem('jwtToken')
+      }
+    }
+  }])
+
+  // ADD AUTH INTERCEPTOR 
+  .factory('authInterceptor', ['$rootScope', '$q', '$window', '$location', function ($rootScope, $q, $window, $location) {
+    return {
+      request: function (config) {
+        config.headers = config.headers || {};
+        if ($window.localStorage.jwtToken) {
+          config.headers.Authorization = 'Bearer ' + $window.localStorage.jwtToken;
+        }
+        return config;
+      },
+      response: function (response) {
+        return response
+      },
+      responseError: function (rejection) {    // error response 
+        console.log("http status", rejection.status);
+        if (rejection.status === 401) {
+          // handle the case where the user is not authenticated
+          console.log($window.localStorage)
+          $window.localStorage.removeItem('jwtToken')
+        }
+        rejection.data = ''
+        $location.path('/login')
+        return rejection
+      }
+    };
+  }])
+
+  .config(function ($httpProvider) {
+    $httpProvider.interceptors.push('authInterceptor');
+  });

@@ -18,6 +18,14 @@ angular.module('myApp', ['ngResource',
         templateUrl: 'templates/todos-index'
       , controller: 'TodosIndexCtrl'
       })
+      .when('/login', {
+        templateUrl: 'templates/login'
+      , controller: 'LoginCtrl'
+      })
+      .when('/sign-up', {
+        templateUrl: 'templates/sign-up'
+      , controller: 'SignUpCtrl'
+      })
 
       .otherwise({
         redirectTo: '/'
