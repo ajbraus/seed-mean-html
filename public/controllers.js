@@ -5,12 +5,13 @@
 'use strict';
 
 angular.module('myApp.controllers', [])
-  .controller('MainCtrl', ['$rootScope', '$scope', '$location', 'Auth', function ($rootScope, $scope, $location, Auth) {
-
+  .controller('MainCtrl', ['$rootScope', '$scope', '$location', function ($rootScope, $scope, $location) {
+    // INITIALIZATION AND NAVBAR LOGIC
   }])
 
   //POSTS
-  .controller('TodosIndexCtrl', function ($scope, $location, Post, Auth) {
+  .controller('TodosIndexCtrl', ['$scope', '$location', 'Post', function ($scope, $location, Post) {
+    // GET TODOS
     Post.query(
       function(data) {
         $scope.todos = data
@@ -19,7 +20,10 @@ angular.module('myApp.controllers', [])
       }
     );
 
+    // NEW TODO
     $scope.todo = {};
+
+    // CREATE A TODO
     $scope.createTodo = function() {
       Post.save($scope.todo, 
         function(data){
@@ -32,9 +36,10 @@ angular.module('myApp.controllers', [])
       $scope.todo = '';
     }
 
+    // DELTE A TODO
     $scope.deleteTodo = function(todo) {
       Post.delete({ id: todo._id });
       var index = $scope.todos.indexOf(todo)
       $scope.todos.splice(index, 1);
     }
-  });
+  }]);

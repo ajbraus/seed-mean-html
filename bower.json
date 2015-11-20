@@ -1,15 +1,14 @@
 {
-  "name": "starter-node-angular",
+  "name": "seed-mean-html",
   "version": "1.0.0",
   "dependencies": {
-    "bootstrap": "latest",
-    "font-awesome": "latest",
     "angular": "latest",
-    "angular-route": "latest",
+    "angular-ui-router": "~0.2.15",
     "angular-resource": "latest",
     "angular-sanitize": "latest",
     "angular-touch": "latest",
-    "underscore": "latest",
-    "angular-socket-io": "~0.7.0"
+    "bootstrap": "latest",
+    "font-awesome": "latest",
+    "underscore": "latest"
   }
 }
