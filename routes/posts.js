@@ -9,7 +9,7 @@ module.exports = function(app) {
   app.get('/api/posts', function (req, res) {
     Post.find().sort('-created_at').exec(function(err, posts) {
       if (err) { return res.status(404).send(err) };
-      res.status(200).json(posts); // return all nerds in JSON format
+      res.send(posts); // return all nerds in JSON format
     });
   });
 
@@ -23,7 +23,7 @@ module.exports = function(app) {
     post.save(function (err, post) {
       console.log('post saved')
       if (err) { return res.send(err) };
-      res.status(201).json(post) 
+      res.status(201).send(post) 
     });
   });
 
@@ -32,7 +32,7 @@ module.exports = function(app) {
     Post.findById(req.params.id, function(err, post) {
       console.log('blah')
       if (err) { return res.status(404).send(err) };
-      res.status(200).json(post); 
+      res.send(post); 
     });
   });
 
@@ -40,7 +40,7 @@ module.exports = function(app) {
   app.put('/api/posts/:id', function (req, res) {
     Post.findOneAndUpdate({ _id: req.params.id}, req.query.post, function (err, post) {
       if (err) { return res.send(err) }
-      res.status(200).json(post)
+      res.send(post)
     });
   });
 
@@ -48,7 +48,7 @@ module.exports = function(app) {
   app.delete('/api/posts/:id', function (req, res) { 
     Post.findByIdAndRemove(req.params.id, function (err, post) {
       if (err) { return res.send(err) }
-      res.status(200);
+      res.send('Success')
     });
   });
 }
