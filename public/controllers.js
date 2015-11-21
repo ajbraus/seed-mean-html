@@ -10,12 +10,15 @@ angular.module('myApp.controllers', [])
   }])
 
   //POSTS
-  .controller('TodosIndexCtrl', ['$scope', '$location', function ($scope, $location) {
-    // GET TODOS
+  .controller('PostsIndexCtrl', ['$scope', '$location', '$http', function ($scope, $location, $http) {
+    // GET POSTS
 
-    // NEW TODO
+    // NEW POST
 
-    // CREATE A TODO
 
-    // DELETE A TODO
+    // CREATE A POST
+
+
+    // DELETE A POST
+
   }]);
